@@ -1,0 +1,151 @@
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.15.0/dist/full.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="navbar bg-base-200 shadow-lg">
+        <div class="flex-1">
+        <h1 class="text-2xl font-bold px-4 text-4xl font-bold text-center text-blue-500">School Website</h1>
+        </div>
+        <div class="flex-none gap-2">
+            <a href="login.html" class="btn btn-primary">Login</a>
+        </div>
+    </div>
+    <!-- Success Alert (hidden by default) -->
+    <div id="successAlert" class="alert alert-success shadow-lg fixed top-4 left-1/2 transform -translate-x-1/2 w-auto opacity-0 invisible z-50">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span id="successMessage"></span>
+            </div>
+    </div>
+    <!-- Error Alert (hidden by default) -->
+    <div id="errorAlert" class="alert alert-error shadow-lg fixed top-4 left-1/2 transform -translate-x-1/2 w-auto opacity-0 invisible z-50">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span id="errorMessage"></span>
+            </div>
+    </div>
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <h2 class="text-2xl font-bold mb-6 text-center">Registration Form</h2>
+                <form id="registrationForm" action="user.php" method="POST">
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Service Number</label>
+                        <input type="text" name="service_number" class="input input-bordered w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Rank</label>
+                        <input type="text" name="rank" class="input input-bordered w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Name</label>
+                        <input type="text" name="name" class="input input-bordered w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Email</label>
+                        <input type="email" name="email" class="input input-bordered w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Phone Number</label>
+                        <input type="tel" name="phone_number" class="input input-bordered w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Password</label>
+                        <input type="password" name="password" class="input input-bordered w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Confirm Password</label>
+                        <input type="password" name="confirm_password" class="input input-bordered w-full" required>
+                    </div>
+                    <div class="mb-6">
+                        <button type="submit" class="btn btn-primary w-full">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#registrationForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const phoneNumber = $('input[name="phone_number"]').val();
+                const password = $('input[name="password"]').val();
+                const serviceNumber = $('input[name="service_number"]').val();
+                const rank = $('input[name="rank"]').val();
+                const name = $('input[name="name"]').val();
+                const email = $('input[name="email"]').val();
+                const confirmPassword = $('input[name="confirm_password"]').val();
+                
+                // Show loading state
+                const submitButton = $(this).find('button[type="submit"]');
+                submitButton.addClass('loading').prop('disabled', true);
+                $('#errorAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
+                $('#successAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
+
+                $.ajax({
+                    url: 'user.php',
+                    type: 'POST',
+                    data: {
+                        service_number: serviceNumber,
+                        rank: rank,
+                        name: name,
+                        email: email,
+                        phone_number: phoneNumber,
+                        password: password,
+                        confirm_password: confirmPassword
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            // Show success message
+                            $('#successMessage').text('Registration successful for user ' + name);
+                            $('#successAlert').removeClass('opacity-0 invisible').addClass('opacity-100 visible');
+                            setTimeout(function() {
+                                $('#successAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
+                                window.location.href = 'login.html';
+                            }, 2000);
+                            submitButton.removeClass('loading').prop('disabled', false);
+                        } else {
+                            // Show error message
+                            $('#errorMessage').text(response.message || 'Registration failed. Please try again.');
+                            $('#errorAlert').removeClass('opacity-0 invisible').addClass('opacity-100 visible');
+                            setTimeout(function() {
+                                $('#errorAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
+                            }, 3000);
+                            submitButton.removeClass('loading').prop('disabled', false);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#errorMessage').text('An error occurred: ' + error);
+                        $('#errorAlert').removeClass('opacity-0 invisible').addClass('opacity-100 visible');
+                        setTimeout(function() {
+                            $('#errorAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
+                        }, 3000);
+                        submitButton.removeClass('loading').prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <footer class="bg-gray-800 text-white py-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 School System. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+</html>
