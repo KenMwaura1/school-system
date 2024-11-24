@@ -9,10 +9,10 @@ if (!isset($_SESSION['user_id'])) {
 $user_name = $_SESSION['user_name'];
 
 // Check if user is a student
-if ($_SESSION['user_role'] !== 'student') {
-    header('Location: unauthorized.php');
-    exit;
-}
+// if ($_SESSION['role'] !== 'student') {
+//     header('Location: unauthorized.php');
+//     exit;
+// }
 
 // Handle logout
 if(isset($_GET['logout'])) {
