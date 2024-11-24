@@ -28,13 +28,11 @@ if ($result->num_rows > 0) {
     // User found
     $user = $result->fetch_assoc();
     
-    // Debugging: Check the contents of the $user array
-    error_log(print_r($user, true));
-    
     // Verify password
     if (password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['user_name'] = $user['user_name'] ?? 'Unknown'; // Use a default value if user_name is not set
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['role'] = $user['role'];
         $response['success'] = true;
         $response['redirect'] = 'dashboard.php';
     } else {

@@ -167,6 +167,7 @@ try {
         </div>
         <div class="flex-none gap-2">
             <a href="index.html" class="btn btn-ghost">Home</a>
+            <a href="student_details.php" class="btn btn-primary">Student Details</a>
             <a href="?logout=true" class="btn btn-ghost">Logout</a>
             <a href="assign_subject_form.php" class="btn btn-ghost">Assign Subjects</a>
         </div>
