@@ -1,0 +1,34 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ dev, main ]
+  pull_request:
+    branches: [ dev, main ]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        tools: phpmd, phpcpd, phpstan
+
+    - name: Install dependencies
+      run: |
+        if [ -f "composer.json" ]; then
+          composer install --prefer-dist --no-progress
+        fi
+
+    - name: PHP Mess Detector
+      run: phpmd . text cleancode,codesize,controversial,design,naming,unusedcode --exclude vendor
+
+    - name: PHP Copy/Paste Detector
+      run: phpcpd . --exclude vendor
+
+    - name: PHP Stan Static Analysis
+      run: phpstan analyse src tests --level=5
