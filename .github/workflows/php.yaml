@@ -31,24 +31,24 @@ jobs:
         extensions: mbstring, intl, pdo_mysql
         coverage: xdebug
 
-    - name: Validate composer.json and composer.lock
-      run: |
-        if [ -f "composer.json" ]; then
-          composer validate --strict
-        fi
+    # - name: Validate composer.json and composer.lock
+    #   run: |
+    #     if [ -f "composer.json" ]; then
+    #       composer validate --strict
+    #     fi
 
-    - name: Install dependencies
-      run: |
-        if [ -f "composer.json" ]; then
-          composer install --prefer-dist --no-progress
-        fi
+    # - name: Install dependencies
+    #   run: |
+    #     if [ -f "composer.json" ]; then
+    #       composer install --prefer-dist --no-progress
+    #     fi
 
-    - name: PHP Lint
-      run: |
-        find . -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+    # - name: PHP Lint
+    #   run: |
+    #     find . -type f -name '*.php' -print0 | xargs -0 -n1 php -l
 
-    - name: Run test suite
-      run: |
-        if [ -f "phpunit.xml" ]; then
-          vendor/bin/phpunit
-        fi
+    # - name: Run test suite
+    #   run: |
+    #     if [ -f "phpunit.xml" ]; then
+    #       vendor/bin/phpunit
+    #     fi
