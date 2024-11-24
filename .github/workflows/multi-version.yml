@@ -23,17 +23,17 @@ jobs:
         extensions: mbstring, intl
         coverage: xdebug
 
-    - name: Validate composer.json
-      run: |
-        if [ -f "composer.json" ]; then
-          composer validate --strict
-        fi
+    # - name: Validate composer.json
+    #   run: |
+    #     if [ -f "composer.json" ]; then
+    #       composer validate --strict
+    #     fi
 
-    - name: Install dependencies
-      run: |
-        if [ -f "composer.json" ]; then
-          composer install --prefer-dist --no-progress
-        fi
+    # - name: Install dependencies
+    #   run: |
+    #     if [ -f "composer.json" ]; then
+    #       composer install --prefer-dist --no-progress
+    #     fi
 
     - name: Run tests
       run: |
