@@ -14,11 +14,11 @@ $phone_number = $_POST['phone_number'];
 $password = $_POST['password'];
 
 // Query to check if the user exists
-$stmt = $db->prepare("SELECT * FROM users WHERE phone_number = ? AND password = ?");
+$stmt = $db->prepare("SELECT * FROM users WHERE phone_number = ?");
 if ($stmt === false) {
     die("Prepare failed: " . $db->error);
 }
-$stmt->bind_param("ss", $phone_number, $password);
+$stmt->bind_param("s", $phone_number);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -27,10 +27,21 @@ $response = array();
 if ($result->num_rows > 0) {
     // User found
     $user = $result->fetch_assoc();
-    $_SESSION['user_id'] = $user['user_id'];
-    $_SESSION['user_name'] = $user['user_name'];
-    $response['success'] = true;
-    $response['redirect'] = 'dashboard.php';
+    
+    // Debugging: Check the contents of the $user array
+    error_log(print_r($user, true));
+    
+    // Verify password
+    if (password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['user_name'] = $user['user_name'] ?? 'Unknown'; // Use a default value if user_name is not set
+        $response['success'] = true;
+        $response['redirect'] = 'dashboard.php';
+    } else {
+        // Invalid password
+        $response['success'] = false;
+        $response['message'] = 'Invalid phone number or password.';
+    }
 } else {
     // User not found
     $response['success'] = false;
@@ -41,4 +52,4 @@ $stmt->close();
 $db->close();
 
 echo json_encode($response);
-?>  
+?>
