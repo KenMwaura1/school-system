@@ -1,0 +1,56 @@
+
+# PHP specific files
+/vendor/
+composer.phar
+composer.lock
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.settings/
+.buildpath
+.project
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment files
+.env
+.env.backup
+.env.local
+.env.*.local
+
+# Log files
+*.log
+/logs/
+/log/
+error_log
+access_log
+
+# Cache files
+/cache/
+*.cache
+
+# Temporary files
+/tmp/
+/temp/
+
+# Test coverage
+/coverage/
+/clover.xml
+
+# Build files
+/build/
+/dist/
