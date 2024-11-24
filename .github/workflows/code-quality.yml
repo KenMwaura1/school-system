@@ -18,11 +18,11 @@ jobs:
         php-version: '8.1'
         tools: phpmd, phpcpd, phpstan
 
-    - name: Install dependencies
-      run: |
-        if [ -f "composer.json" ]; then
-          composer install --prefer-dist --no-progress
-        fi
+    # - name: Install dependencies
+    #   run: |
+    #     if [ -f "composer.json" ]; then
+    #       composer install --prefer-dist --no-progress
+    #     fi
 
     - name: PHP Mess Detector
       run: phpmd . text cleancode,codesize,controversial,design,naming,unusedcode --exclude vendor
