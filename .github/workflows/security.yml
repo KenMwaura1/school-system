@@ -1,0 +1,37 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ dev,main ]
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Install dependencies
+      run: |
+        if [ -f "composer.json" ]; then
+          composer install --prefer-dist --no-progress
+        fi
+
+    - name: Security Check
+      uses: symfonycorp/security-checker-action@v4
+
+    - name: Composer Audit
+      run: composer audit
+
+    - name: Run OWASP Dependency-Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'My PHP Project'
+        path: '.'
+        format: 'HTML'
