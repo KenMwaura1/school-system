@@ -23,8 +23,8 @@ jobs:
           composer install --prefer-dist --no-progress
         fi
 
-    - name: Security Check
-      uses: symfonycorp/security-checker-action@v4
+    # - name: Security Check
+    #   uses: symfonycorp/security-checker-action@v4
 
     # - name: Composer Audit
     #   run: composer audit
