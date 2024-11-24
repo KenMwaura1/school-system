@@ -13,7 +13,7 @@
         <h1 class="text-2xl font-bold px-4 text-4xl font-bold text-center text-blue-500">School Website</h1>
         </div>
         <div class="flex-none gap-2">
-            <a href="login.html" class="btn btn-primary">Login</a>
+            <a href="login.php" class="btn btn-primary">Login</a>
         </div>
     </div>
     <!-- Success Alert (hidden by default) -->
@@ -115,7 +115,7 @@
                             $('#successAlert').removeClass('opacity-0 invisible').addClass('opacity-100 visible');
                             setTimeout(function() {
                                 $('#successAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
-                                window.location.href = 'login.html';
+                                window.location.href = 'login.php';
                             }, 2000);
                             submitButton.removeClass('loading').prop('disabled', false);
                         } else {

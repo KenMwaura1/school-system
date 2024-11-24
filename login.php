@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +14,7 @@
 <body class="bg-gray-100">
     <div class="navbar bg-base-200 shadow-lg">
         <div class="flex-1">
-            <a href="index.html" class="text-2xl font-bold px-4 text-4xl font-bold text-center text-blue-500">School Website</a>
+            <a href="index.html" class="text-4xl font-bold text-center text-blue-500">School Website</a>
         </div>
         <div class="flex-none gap-2">
             <a href="registration.html" class="btn btn-secondary btn-outline">Register</a>
@@ -20,7 +23,7 @@
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-700">Login</h2>
-            <form id="loginForm" class="space-y-4">
+            <form id="loginForm" class="space-y-4" method="POST" action="login_handler.php">
                 <div class="mb-4">
                     <label class="block text-gray-700">Phone Number</label>
                     <input type="tel" name="phone_number" id="phone_number" class="input input-bordered w-full" required>
@@ -71,9 +74,9 @@
                             submitButton.removeClass('loading').prop('disabled', false);
                         }
                     },
-                    error: function() {
+                    error: function(xhr, status, error) {
                         $('#errorMessage')
-                            .text('An error occurred. Please try again.')
+                            .text('An error occurred: ' + xhr.responseText)
                             .removeClass('hidden');
                         submitButton.removeClass('loading').prop('disabled', false);
                     }
