@@ -165,7 +165,7 @@ try {
             <a class="btn btn-ghost normal-case text-xl">Welcome, <?php echo htmlspecialchars($user_name ?? 'Student'); ?></a>
         </div>
         <div class="flex-none gap-2">
-            <a href="index.php" class="btn btn-ghost">Home</a>
+            <a href="index.html" class="btn btn-ghost">Home</a>
             <a href="?logout=true" class="btn btn-ghost">Logout</a>
             <button class="btn btn-ghost btn-circle">
                 <div class="indicator">
