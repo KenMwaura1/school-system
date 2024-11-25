@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -94,6 +94,7 @@
                 submitButton.addClass('loading').prop('disabled', true);
                 $('#errorAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
                 $('#successAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
+                console.log(serviceNumber, phoneNumber, password, confirmPassword, rank, name, email);
 
                 $.ajax({
                     url: 'user.php',
@@ -106,6 +107,7 @@
                         phone_number: phoneNumber,
                         password: password,
                         confirm_password: confirmPassword
+                       
                     },
                     dataType: 'json',
                     success: function(response) {
@@ -135,6 +137,8 @@
                             $('#errorAlert').addClass('opacity-0 invisible').removeClass('opacity-100 visible');
                         }, 3000);
                         submitButton.removeClass('loading').prop('disabled', false);
+                        // console.log(data);
+                        console.log(xhr);
                     }
                 });
             });
@@ -148,4 +152,4 @@
     </footer>
 </body>
 </html>
-</html>
+
