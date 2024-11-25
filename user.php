@@ -11,6 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'];
         $email = $_POST['email'];
         $phone_number = $_POST['phone_number'];
+        
+        // Validate password match
+        if ($_POST['password'] !== $_POST['confirm_password']) {
+            throw new Exception("Passwords do not match");
+        }
+        
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         // Begin transaction
@@ -21,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                       VALUES (?, ?, ?, ?, ?, ?, 'student')";
         
         $stmt = $conn->prepare($user_query);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
         $stmt->bind_param("ssssss", $service_number, $rank, $name, $email, $phone_number, $password);
         $stmt->execute();
         
@@ -31,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          VALUES (?, CURRENT_DATE, YEAR(CURRENT_DATE) + 4, 'active')";
         
         $stmt = $conn->prepare($student_query);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
 
@@ -39,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Send success response
         $response['success'] = true;
-        $response['message'] = $name; // Send back the user's name
+        $response['message'] = "Welcome " . $name . "! Registration successful.";
         
         // Add login redirect button
         $response['html'] = '<button onclick="window.location.href=\'login.php\'" class="btn btn-primary">Go to Login</button>';
@@ -47,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
         // Rollback transaction on error
         $conn->rollback();
-        $response['message'] = "Registration failed. Please try again.";
+        $response['message'] = $e->getMessage() ?: "Registration failed. Please try again.";
     }
 
     // Send JSON response

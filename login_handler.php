@@ -5,7 +5,7 @@ session_start();
 require_once('db_connection.php');
 
 // Check if the database connection is established
-if (!isset($db)) {
+if (!isset($conn)) {
     die("Database connection failed.");
 }
 
@@ -14,9 +14,9 @@ $phone_number = $_POST['phone_number'];
 $password = $_POST['password'];
 
 // Query to check if the user exists
-$stmt = $db->prepare("SELECT * FROM users WHERE phone_number = ?");
+$stmt = $conn->prepare("SELECT * FROM users WHERE phone_number = ?");
 if ($stmt === false) {
-    die("Prepare failed: " . $db->error);
+    die("Prepare failed: " . $conn->error);
 }
 $stmt->bind_param("s", $phone_number);
 $stmt->execute();
@@ -47,7 +47,8 @@ if ($result->num_rows > 0) {
 }
 
 $stmt->close();
-$db->close();
+$conn->close();
 
+header('Content-Type: application/json');
 echo json_encode($response);
 ?>
