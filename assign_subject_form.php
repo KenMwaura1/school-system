@@ -15,6 +15,7 @@ $user_name = $_SESSION['user_name'];
     <title>Assign Subjects to Students</title>
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.0/dist/full.css" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body class="bg-base-200 min-h-screen">
     <!-- Navbar -->
