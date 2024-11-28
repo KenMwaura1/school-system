@@ -19,12 +19,12 @@ try {
     // Sample data for users
     $users = [
         // Teachers
-        ['T101', 'Professor', 'John Smith', 'john.smith@school.com', '1234567890', password_hash('password123', PASSWORD_DEFAULT), 'teacher'],
-        ['T102', 'Dr', 'Sarah Johnson', 'sarah.j@school.com', '1234567891', password_hash('password123', PASSWORD_DEFAULT), 'teacher'],
+        ['114852', 'WOII', 'Analo', 'analo@school.com', '1234567890', password_hash('password123', PASSWORD_DEFAULT), 'teacher'],
+        ['114584', 'WOII', 'Musa', 'musa@school.com', '1234567891', password_hash('password123', PASSWORD_DEFAULT), 'teacher'],
         // Students
-        ['S101', 'Student', 'Mike Wilson', 'mike.w@school.com', '1234567892', password_hash('password123', PASSWORD_DEFAULT), 'student'],
-        ['S102', 'Student', 'Emma Davis', 'emma.d@school.com', '1234567893', password_hash('password123', PASSWORD_DEFAULT), 'student'],
-        ['S103', 'Student', 'James Brown', 'james.b@school.com', '1234567894', password_hash('password123', PASSWORD_DEFAULT), 'student']
+        ['417521', 'PTE', 'Walter Kiptoo', 'walt.k@school.com', '1234567892', password_hash('password123', PASSWORD_DEFAULT), 'student'],
+        ['417522', 'PTE', 'Hilla Kaunda', 'hill.k@school.com', '1234567893', password_hash('password123', PASSWORD_DEFAULT), 'student'],
+        ['417523', 'PTE', 'Gift Tembu', 'gift.t@school.com', '1234567894', password_hash('password123', PASSWORD_DEFAULT), 'student']
     ];
 
     foreach ($users as $user) {
@@ -35,12 +35,12 @@ try {
         // Insert into teachers or students table based on role
         if ($user[6] === 'teacher') {
             $teacher_sql = $conn->prepare("INSERT INTO teachers (teacher_id, department) VALUES (?, ?)");
-            $department = 'General Studies';
+            $department = 'Information Technology';
             $teacher_sql->bind_param('is', $user_id, $department);
             $teacher_sql->execute();
         } else {
             $student_sql = $conn->prepare("INSERT INTO students (student_id, enrollment_date, graduation_year, status) VALUES (?, ?, ?, ?)");
-            $enrollment_date = '2023-09-01';
+            $enrollment_date = '2024-09-01';
             $graduation_year = 2027;
             $status = 'active';
             $student_sql->bind_param('isis', $user_id, $enrollment_date, $graduation_year, $status);
@@ -52,10 +52,10 @@ try {
     $subjects_sql = $conn->prepare("INSERT INTO subjects (subject_code, subject_name, description, credits) VALUES (?, ?, ?, ?)");
     
     $subjects = [
-        ['MATH101', 'Mathematics', 'Basic mathematics and algebra', 3],
-        ['ENG101', 'English', 'English language and literature', 3],
-        ['CS101', 'Computer Science', 'Introduction to programming', 4],
-        ['PHY101', 'Physics', 'Basic physics concepts', 3]
+        ['W101', 'Windows 10', 'Introduction to Windows 10 ', 3],
+        ['MYSQL101', 'MYSQL', 'MYSQL Databases', 3],
+        ['IT101', 'IT Essentials', 'IT Essentials', 4],
+        ['WS101', 'Windows Server', 'Windows Server', 3]
     ];
 
     foreach ($subjects as $subject) {
